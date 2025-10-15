@@ -31,6 +31,17 @@ base64 -w 0 keystore.jks > keystore.jks.base64
 1. 在项目根目录创建apk签名密钥设置文件```keystore.properties```，内容参考同级的```keystore.example.properties```
 2. 使用Android Studio进行编译打包
 
+### 通过命令行打包
+
+如果你只想在命令行环境下完成打包，可以按照下面的步骤进行：
+
+1. 确保本机已经安装好 Android SDK，并在项目根目录创建 ```local.properties``` 指定 ```sdk.dir```（Android Studio 会自动生成该文件，如果已经存在可跳过）。
+2. 在项目根目录创建签名配置文件 ```keystore.properties```，字段与示例文件保持一致。
+3. 执行 ```./gradlew assembleRelease``` 生成签名的发布 APK，或者执行 ```./gradlew assembleDebug``` 生成调试包。
+4. 打包成功后，可在 ```app/build/outputs/apk``` 目录下找到相应的 APK 文件。
+
+> **提示**：首次执行 Gradle Wrapper 会从网络下载对应版本的 Gradle，如果处于内网或无法直接访问官方源，可提前在可联网环境下载好 `gradle-8.9-bin.zip` 并配置本地镜像，或设置 HTTP 代理后再运行上述命令。
+
 ## 常见问题
 ### 项目的frp内核(libfrpc.so)是怎么来的？
 直接从[frp的release](https://github.com/fatedier/frp/releases)里把对应ABI的Linux版本压缩包解压之后重命名frpc为libfrpc.so  

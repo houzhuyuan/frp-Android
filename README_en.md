@@ -31,6 +31,17 @@ The content for ```STORE_FILE``` should be the base64 from step 1, while you sho
 1. Create an APK signing key configuration file named ```keystore.properties``` at the root directory of the project, referencing the existing ```keystore.example.properties``` file at the same level.
 2. Compile and package using Android Studio.
 
+### Packaging from the command line
+
+If you prefer building outside of Android Studio, you can complete the process directly in a terminal:
+
+1. Make sure the Android SDK is installed and declare the path in a ```local.properties``` file (Android Studio generates it automatically; if it already exists you can reuse it).
+2. Create the ```keystore.properties``` signing file in the project root with the same fields as the example file.
+3. Run ```./gradlew assembleRelease``` to produce a signed release APK, or ```./gradlew assembleDebug``` for a debug build.
+4. After the build finishes, the APKs are placed under ```app/build/outputs/apk```.
+
+> **Tip:** The first Gradle Wrapper execution downloads ```gradle-8.9-bin.zip``` from the internet. If your environment cannot reach the official servers, pre-download the archive from a reachable network and configure a local mirror, or run the command again after setting up an HTTP proxy.
+
 ## FAQs
 ### Where does the frp kernel (libfrpc.so) of the project come from?
 It is obtained directly by extracting the corresponding ABI Linux version archive from [frp's release](https://github.com/fatedier/frp/releases), renaming frpc to libfrpc.so.  
