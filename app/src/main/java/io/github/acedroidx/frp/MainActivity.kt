@@ -45,11 +45,14 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -161,6 +164,11 @@ class MainActivity : ComponentActivity() {
         val clipboardManager = LocalClipboardManager.current
         val logText by logText.collectAsStateWithLifecycle("")
         val openDialog = remember { mutableStateOf(false) }
+        val initialFocusRequester = remember { FocusRequester() }
+
+        LaunchedEffect(Unit) {
+            initialFocusRequester.requestFocus()
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -203,7 +211,9 @@ class MainActivity : ComponentActivity() {
             ) {
                 Button(onClick = {
                     openDialog.value = true
-                }) { Text(stringResource(R.string.addConfigButton)) }
+                }, modifier = Modifier.focusRequester(initialFocusRequester)) {
+                    Text(stringResource(R.string.addConfigButton))
+                }
                 Button(onClick = {
                     startActivity(Intent(this@MainActivity, AboutActivity::class.java))
                 }) { Text(stringResource(R.string.aboutButton)) }
